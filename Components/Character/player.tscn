@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://7tjty7bena1t"]
+
+[ext_resource type="PackedScene" uid="uid://dftx81t7nvim8" path="res://Components/Character/base_character_controller.tscn" id="1_v5cr3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_13yii"]
+radius = 15.0333
+
+[node name="Player" instance=ExtResource("1_v5cr3")]
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_13yii")

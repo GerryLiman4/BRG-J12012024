@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dftx81t7nvim8"]
+
+[ext_resource type="Texture2D" uid="uid://ccpfhxnvtpgu7" path="res://Resources/basic cute robot/ballbot/2/ballpurple1.png" id="1_uxsrt"]
+
+[node name="BaseCharacter" type="CharacterBody2D"]
+
+[node name="Model" type="Sprite2D" parent="."]
+texture = ExtResource("1_uxsrt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
