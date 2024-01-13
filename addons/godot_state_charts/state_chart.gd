@@ -48,7 +48,7 @@ var _transitions_processing_active:bool = false
 var _debugger_remote:DebuggerRemote = null
 
 
-func _ready() -> void:
+func _enter_tree() -> void:
 	if Engine.is_editor_hint():
 		return 
 
