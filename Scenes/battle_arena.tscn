@@ -4,12 +4,13 @@
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="1_kui7w"]
 [ext_resource type="Texture2D" uid="uid://dwvt17ot5tunt" path="res://Resources/SampleBackground.png" id="2_x42dv"]
 [ext_resource type="PackedScene" uid="uid://7tjty7bena1t" path="res://Components/Character/player.tscn" id="3_vkt46"]
-[ext_resource type="PackedScene" uid="uid://m1nmatnje01v" path="res://Components/Character/base_enemy.tscn" id="5_gjhq3"]
+[ext_resource type="PackedScene" uid="uid://dkoqwk86xiixj" path="res://Components/Character/boss_1.tscn" id="5_l1vkq"]
 
 [node name="BattleArena" type="Node2D"]
 script = ExtResource("1_bva3p")
 
 [node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
 texture = ExtResource("2_x42dv")
 
 [node name="PhantomCamera2D" type="Node2D" parent="."]
@@ -37,8 +38,9 @@ inactive_update_mode = 0
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("3_vkt46")]
+visible = false
 position = Vector2(1, 178)
 
-[node name="BaseEnemy" parent="." instance=ExtResource("5_gjhq3")]
-position = Vector2(1, -144)
-scale = Vector2(1.5, 1.5)
+[node name="Boss1" parent="." instance=ExtResource("5_l1vkq")]
+
+[node name="Camera2D" type="Camera2D" parent="."]

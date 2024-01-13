@@ -22,6 +22,12 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/godot_state_charts/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
 
+[layer_names]
+
+2d_physics/layer_1="World"
+2d_physics/layer_6="Hitbox"
+2d_physics/layer_11="Enemy"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
