@@ -1,0 +1,117 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2hfl4kxgqjf1"]
+
+[ext_resource type="PackedScene" uid="uid://dovwega0a3tpe" path="res://Components/UI/general_button.tscn" id="1_oqu5a"]
+[ext_resource type="Script" path="res://Scenes/MainMenu/main_menu.gd" id="1_updoi"]
+[ext_resource type="LabelSettings" uid="uid://dijs6nmpg7l6s" path="res://Theme/Robot_white_64.tres" id="1_yt8iy"]
+[ext_resource type="LabelSettings" uid="uid://5kwcugml2em4" path="res://Theme/Roboto_black_20.tres" id="2_kcx6d"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_updoi")
+
+[node name="MainUI" type="CanvasLayer" parent="."]
+
+[node name="Background" type="TextureRect" parent="MainUI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="MainUI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -63.0
+offset_top = 32.0
+offset_right = 64.0
+offset_bottom = 55.0
+grow_horizontal = 2
+text = "BRG-J12012024"
+label_settings = ExtResource("1_yt8iy")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -76.0
+offset_right = 225.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="StartButton" parent="MainUI/VBoxContainer" instance=ExtResource("1_oqu5a")]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainUI/VBoxContainer/StartButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 6.0
+offset_right = -9.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "START"
+label_settings = ExtResource("2_kcx6d")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HowToPlayButton" parent="MainUI/VBoxContainer" instance=ExtResource("1_oqu5a")]
+custom_minimum_size = Vector2(175, 50)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainUI/VBoxContainer/HowToPlayButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 6.0
+offset_right = -9.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "HOW TO PLAY"
+label_settings = ExtResource("2_kcx6d")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="MainUI/VBoxContainer"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="ExitButton" parent="MainUI/VBoxContainer" instance=ExtResource("1_oqu5a")]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainUI/VBoxContainer/ExitButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 6.0
+offset_right = -9.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "EXIT"
+label_settings = ExtResource("2_kcx6d")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="is_selected" from="MainUI/VBoxContainer/StartButton" to="." method="_on_start_button_is_selected"]
+[connection signal="is_selected" from="MainUI/VBoxContainer/HowToPlayButton" to="." method="_on_how_to_play_button_is_selected"]
+[connection signal="is_selected" from="MainUI/VBoxContainer/ExitButton" to="." method="_on_exit_button_is_selected"]
