@@ -1,11 +1,275 @@
-[gd_scene load_steps=3 format=3 uid="uid://7tjty7bena1t"]
+[gd_scene load_steps=24 format=3 uid="uid://7tjty7bena1t"]
 
 [ext_resource type="PackedScene" uid="uid://dftx81t7nvim8" path="res://Components/Character/base_character_controller.tscn" id="1_v5cr3"]
+[ext_resource type="Texture2D" uid="uid://cjvrwmaein6c0" path="res://Resources/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Full health.png" id="2_uuwcn"]
+[ext_resource type="Script" path="res://Components/Character/player_controller.gd" id="2_xmv7x"]
+[ext_resource type="Texture2D" uid="uid://c1t8kjl2o0vtj" path="res://Resources/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Base Engine - Idle.png" id="3_1lpuj"]
+[ext_resource type="Texture2D" uid="uid://cj6f1tsocwet2" path="res://Resources/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Base Engine - Powering.png" id="3_67ksd"]
+[ext_resource type="PackedScene" uid="uid://b6665ado4mdxr" path="res://Components/Skill/basic_cannon.tscn" id="3_ue2qb"]
+[ext_resource type="Texture2D" uid="uid://5l5bdjgcih0x" path="res://Resources/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Base Engine.png" id="4_jk15p"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="7_o54mo"]
+[ext_resource type="Texture2D" uid="uid://rj63tepjicnu" path="res://Resources/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Big Space Gun.png" id="7_schfy"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="8_r7k7f"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="9_og6sl"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="10_dlla1"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="11_wdu82"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="12_k1d23"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_13yii"]
-radius = 15.0333
+[sub_resource type="AtlasTexture" id="AtlasTexture_ox2y8"]
+atlas = ExtResource("3_67ksd")
+region = Rect2(0, 0, 48, 48)
 
-[node name="Player" instance=ExtResource("1_v5cr3")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_y0fhj"]
+atlas = ExtResource("3_67ksd")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ttgmv"]
+atlas = ExtResource("3_67ksd")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqm7v"]
+atlas = ExtResource("3_67ksd")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqnci"]
+atlas = ExtResource("3_1lpuj")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nqbfy"]
+atlas = ExtResource("3_1lpuj")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4dpr"]
+atlas = ExtResource("3_1lpuj")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8leew"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ox2y8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y0fhj")
+}],
+"loop": true,
+"name": &"Backward",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ttgmv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqm7v")
+}],
+"loop": true,
+"name": &"Forward",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yqnci")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nqbfy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4dpr")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 24.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c31w2"]
+size = Vector2(22, 46)
+
+[node name="Player" node_paths=PackedStringArray("state_machine", "thruster_animation", "model", "skill_root") instance=ExtResource("1_v5cr3")]
+collision_layer = 512
+collision_mask = 16777217
+script = ExtResource("2_xmv7x")
+movement_speed = 250.0
+state_machine = NodePath("StateChart")
+thruster_animation = NodePath("Model/Thruster/ThrusterFire")
+model = NodePath("Model")
+skew_angle = 1.5
+skill_list_prefab = Array[PackedScene]([ExtResource("3_ue2qb")])
+skill_root = NodePath("Model/SkillsGroup")
+
+[node name="Model" parent="." index="0"]
+z_index = 25
+scale = Vector2(2, 2)
+texture = ExtResource("2_uuwcn")
+
+[node name="Thruster" type="Sprite2D" parent="Model" index="0"]
+show_behind_parent = true
+texture = ExtResource("4_jk15p")
+
+[node name="ThrusterFire" type="AnimatedSprite2D" parent="Model/Thruster" index="0"]
+show_behind_parent = true
+sprite_frames = SubResource("SpriteFrames_8leew")
+animation = &"Backward"
+
+[node name="VFXGroup" type="Node2D" parent="Model" index="1"]
+
+[node name="SkillsGroup" type="Node2D" parent="Model" index="2"]
+show_behind_parent = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Model/SkillsGroup" index="0"]
+visible = false
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("7_schfy")
+hframes = 12
 
 [node name="CollisionShape2D" parent="." index="1"]
-shape = SubResource("CircleShape2D_13yii")
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_c31w2")
+
+[node name="StateChart" type="Node" parent="." index="3"]
+script = ExtResource("7_o54mo")
+
+[node name="ParallelState" type="Node" parent="StateChart" index="0"]
+script = ExtResource("8_r7k7f")
+
+[node name="StateEvent" type="Node" parent="StateChart/ParallelState" index="0"]
+script = ExtResource("9_og6sl")
+initial_state = NodePath("None")
+
+[node name="None" type="Node" parent="StateChart/ParallelState/StateEvent" index="0"]
+script = ExtResource("10_dlla1")
+
+[node name="ToIdle" type="Node" parent="StateChart/ParallelState/StateEvent/None" index="0"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../Idle")
+event = &"Idle"
+
+[node name="Idle" type="Node" parent="StateChart/ParallelState/StateEvent" index="1"]
+script = ExtResource("10_dlla1")
+
+[node name="ToMoving" type="Node" parent="StateChart/ParallelState/StateEvent/Idle" index="0"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../Moving")
+event = &"Moving"
+
+[node name="ToNone" type="Node" parent="StateChart/ParallelState/StateEvent/Idle" index="1"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../None")
+event = &"None"
+
+[node name="ToDie" type="Node" parent="StateChart/ParallelState/StateEvent/Idle" index="2"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../Die")
+event = &"Die"
+
+[node name="Moving" type="Node" parent="StateChart/ParallelState/StateEvent" index="2"]
+script = ExtResource("10_dlla1")
+
+[node name="ToIdle" type="Node" parent="StateChart/ParallelState/StateEvent/Moving" index="0"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../Idle")
+event = &"Idle"
+
+[node name="ToNone" type="Node" parent="StateChart/ParallelState/StateEvent/Moving" index="1"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../None")
+event = &"None"
+
+[node name="ToDie" type="Node" parent="StateChart/ParallelState/StateEvent/Moving" index="2"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../Die")
+event = &"Die"
+
+[node name="Dash" type="Node" parent="StateChart/ParallelState/StateEvent" index="3"]
+script = ExtResource("10_dlla1")
+
+[node name="ToIdle" type="Node" parent="StateChart/ParallelState/StateEvent/Dash" index="0"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../Idle")
+event = &"Idle"
+
+[node name="ToNone" type="Node" parent="StateChart/ParallelState/StateEvent/Dash" index="1"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../None")
+event = &"None"
+
+[node name="ToDie" type="Node" parent="StateChart/ParallelState/StateEvent/Dash" index="2"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../Die")
+event = &"Die"
+
+[node name="Die" type="Node" parent="StateChart/ParallelState/StateEvent" index="4"]
+script = ExtResource("10_dlla1")
+
+[node name="ToIdle" type="Node" parent="StateChart/ParallelState/StateEvent/Die" index="0"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../Idle")
+event = &"Idle"
+
+[node name="ToNone" type="Node" parent="StateChart/ParallelState/StateEvent/Die" index="1"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../None")
+event = &"None"
+
+[node name="StateCondition" type="Node" parent="StateChart/ParallelState" index="1"]
+script = ExtResource("9_og6sl")
+initial_state = NodePath("None")
+
+[node name="None" type="Node" parent="StateChart/ParallelState/StateCondition" index="0"]
+script = ExtResource("10_dlla1")
+
+[node name="ToHurt" type="Node" parent="StateChart/ParallelState/StateCondition/None" index="0"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../Hurt")
+event = &"Hurt"
+
+[node name="ToSpecial1" type="Node" parent="StateChart/ParallelState/StateCondition/None" index="1"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../Special1")
+event = &"Special1"
+
+[node name="Hurt" type="Node" parent="StateChart/ParallelState/StateCondition" index="1"]
+script = ExtResource("10_dlla1")
+
+[node name="ToSpecial1" type="Node" parent="StateChart/ParallelState/StateCondition/Hurt" index="0"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../Special1")
+event = &"Special1"
+
+[node name="ToNone" type="Node" parent="StateChart/ParallelState/StateCondition/Hurt" index="1"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../None")
+event = &"None"
+
+[node name="Special1" type="Node" parent="StateChart/ParallelState/StateCondition" index="2"]
+script = ExtResource("10_dlla1")
+
+[node name="ToHurt" type="Node" parent="StateChart/ParallelState/StateCondition/Special1" index="0"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../Hurt")
+event = &"Hurt"
+
+[node name="ToSpecial1" type="Node" parent="StateChart/ParallelState/StateCondition/Special1" index="1"]
+script = ExtResource("11_wdu82")
+to = NodePath("..")
+event = &"Special1"
+
+[node name="ToNone" type="Node" parent="StateChart/ParallelState/StateCondition/Special1" index="2"]
+script = ExtResource("11_wdu82")
+to = NodePath("../../None")
+event = &"None"
+
+[node name="StateChartDebugger" parent="." index="4" instance=ExtResource("12_k1d23")]
+offset_left = -169.0
+offset_top = -131.0
+offset_right = 149.0
+offset_bottom = -22.0
+initial_node_to_watch = NodePath("../StateChart")
+
+[connection signal="state_entered" from="StateChart/ParallelState/StateEvent/Idle" to="." method="_on_idle_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/StateEvent/Idle" to="." method="_on_idle_state_physics_processing"]
+[connection signal="state_processing" from="StateChart/ParallelState/StateEvent/Idle" to="." method="_on_idle_state_processing"]
+[connection signal="state_entered" from="StateChart/ParallelState/StateEvent/Moving" to="." method="_on_moving_state_entered"]
+[connection signal="state_exited" from="StateChart/ParallelState/StateEvent/Moving" to="." method="_on_moving_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/StateEvent/Moving" to="." method="_on_moving_state_physics_processing"]
+[connection signal="state_processing" from="StateChart/ParallelState/StateEvent/Moving" to="." method="_on_moving_state_processing"]

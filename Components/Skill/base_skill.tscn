@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://biji3cfgmrngs"]
+
+[ext_resource type="Script" path="res://Components/Skill/base_skill.gd" id="1_cw3o6"]
+
+[node name="BaseSkill" type="Node2D" node_paths=PackedStringArray("cooldown_timer")]
+script = ExtResource("1_cw3o6")
+cooldown_timer = NodePath("CooldownTimer")
+
+[node name="CooldownTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]

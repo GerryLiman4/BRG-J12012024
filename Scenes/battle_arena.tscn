@@ -1,10 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://ba51b1dwuhitg"]
+[gd_scene load_steps=9 format=3 uid="uid://ba51b1dwuhitg"]
 
 [ext_resource type="Script" path="res://Scenes/battle_arena_manager.gd" id="1_bva3p"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="1_kui7w"]
 [ext_resource type="Texture2D" uid="uid://dwvt17ot5tunt" path="res://Resources/SampleBackground.png" id="2_x42dv"]
 [ext_resource type="PackedScene" uid="uid://7tjty7bena1t" path="res://Components/Character/player.tscn" id="3_vkt46"]
 [ext_resource type="PackedScene" uid="uid://dkoqwk86xiixj" path="res://Components/Character/boss_1.tscn" id="5_l1vkq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ka276"]
+size = Vector2(1074, 319)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pvn16"]
+size = Vector2(204, 950)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7vbm3"]
+size = Vector2(177, 944)
 
 [node name="BattleArena" type="Node2D"]
 script = ExtResource("1_bva3p")
@@ -37,10 +46,28 @@ inactive_update_mode = 0
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("3_vkt46")]
-visible = false
-position = Vector2(1, 178)
-
 [node name="Boss1" parent="." instance=ExtResource("5_l1vkq")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("3_vkt46")]
+
+[node name="Boundaries" type="StaticBody2D" parent="."]
+collision_layer = 16777216
+collision_mask = 512
+
+[node name="BoundaryTop" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(-18, -624)
+shape = SubResource("RectangleShape2D_ka276")
+
+[node name="BoundaryBot" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(-18, 644)
+shape = SubResource("RectangleShape2D_ka276")
+
+[node name="BoundaryLeft" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(-446, 8)
+shape = SubResource("RectangleShape2D_pvn16")
+
+[node name="BoundaryRight" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(431.5, 13)
+shape = SubResource("RectangleShape2D_7vbm3")
