@@ -22,10 +22,6 @@ func activate_skill():
 	start_cooldown_timer()
 
 func start_cooldown_timer():
-	if cooldown_time > 0.0 :
-		is_cooldown = false
-		return
-	
 	cooldown_timer.start(cooldown_time)
 
 func _on_cooldown_timer_timeout():
