@@ -5,6 +5,7 @@ extends BaseSkill
 @export_category("Bullet Configuration")
 @export var bullet_prefab : PackedScene
 @export var bullet_speed : float = 200.0
+@export var bullet_damage : int = 1
 @export var direction : Vector2 = Vector2.ZERO
 @export var spawn_point : Marker2D
 

@@ -148,15 +148,15 @@ func _on_moving_state_physics_processing(delta):
 #endregion
 
 func play_thruster_animation():
-	if move_direction == Vector2.ZERO :
+	if velocity == Vector2.ZERO :
 		thruster_animation.play(AnimationId.Thruster.IDLE)
 		return
 	
-	if move_direction == Vector2.UP :
+	if velocity.y < 0 :
 		thruster_animation.play(AnimationId.Thruster.FORWARD)
 		return
 	
-	if move_direction == Vector2.DOWN :
+	if velocity.y > 0 :
 		thruster_animation.play(AnimationId.Thruster.BACKWARD)
 		return
 

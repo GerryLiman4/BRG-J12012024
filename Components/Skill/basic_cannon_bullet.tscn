@@ -85,8 +85,11 @@ animations = [{
 }]
 
 [node name="BasicCannonBullet" instance=ExtResource("1_ima4s")]
+collision_layer = 16416
+collision_mask = 32
+audio_bus_name = &"SFX"
 script = ExtResource("2_2uof7")
-speed = 12.0
+speed = 20.0
 
 [node name="Hitbox" parent="." index="0"]
 shape = SubResource("CircleShape2D_bkf0o")
@@ -95,3 +98,6 @@ shape = SubResource("CircleShape2D_bkf0o")
 sprite_frames = SubResource("SpriteFrames_4x671")
 animation = &"Move"
 autoplay = "Move"
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
