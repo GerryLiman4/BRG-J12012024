@@ -1,12 +1,19 @@
 extends Node2D
 
+@export var boss_name : String
 
-# Called when the node enters the scene tree for the first time.
+@export_category("HUD")
+@export var boss_name_label : Label
+@export var boss_hp : ProgressBar
+
 func _ready():
-	pass # Replace with function body.
+	SignalManager.on_boss_hp_updated.connect(on_boss_hp_updated)
+	initialize()
 
+func initialize():
+	boss_name_label.text = boss_name
+	boss_hp.value = 100.0
 
-# Called every frame. 'delta' is the elapsed time since the previo[us frame.
-func _process(delta):
-	pass
-
+func on_boss_hp_updated(max_hp : int , updated_hp : int):
+	var val : float = float(updated_hp) / float(max_hp)  * 100.0
+	boss_hp.value = val

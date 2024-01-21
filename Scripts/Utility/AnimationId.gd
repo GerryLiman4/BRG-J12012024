@@ -14,3 +14,9 @@ const Id = {
 	"SPECIAL_3" : "Special3",
 	"SPECIAL_4" : "Special4"
 }
+
+const Thruster = {
+	"IDLE" : "Idle",
+	"FORWARD" : "Forward",
+	"BACKWARD" : "Backward",
+}

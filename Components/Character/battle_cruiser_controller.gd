@@ -4,12 +4,25 @@ extends BaseEnemy
 @export var stop_move_timer : Timer
 @export var movement_speed : float = 3.0
 
+@export var condition_animator : AnimationPlayer
+
 @export_category("ATTACK PATTERN")
 @export var slash_vfx : AnimatedSprite2D
+
+@export_category("HEALTH")
+@export var health : BaseHealth
+@export var max_hp : int = 15
 
 @export var test_timer : Timer
 # for testing
 func _ready():
+	# connect signals
+	health.damaged.connect(on_damaged)
+	health.died.connect(on_died)
+	
+	# Initialize components
+	health.initialize(max_hp)
+	
 	call_deferred("switch_state", STATE_EVENT.IDLE)
 	slash_vfx.animation_finished.connect(on_animation_finished)
 
@@ -124,6 +137,14 @@ func _on_special_4_state_exited():
 	pass # Replace with function body.
 
 #endregion
+
+func on_damaged():
+	condition_animator.play("Hurt")
+	SignalManager.on_boss_hp_updated.emit(health.max_health,health.current_health)
+
+func on_died():
+	SignalManager.on_boss_hp_updated.emit(health.max_health,health.current_health)
+	queue_free()
 
 func _on_move_timer_timeout():
 	call_deferred("switch_state", STATE_EVENT.RANDOM_MOVEMENT)

@@ -1,0 +1,103 @@
+[gd_scene load_steps=16 format=3 uid="uid://domkhv7jf3u73"]
+
+[ext_resource type="PackedScene" uid="uid://f2ssqvqj56xr" path="res://Components/Skill/base_projectile.tscn" id="1_ima4s"]
+[ext_resource type="Script" path="res://Components/Skill/basic_cannon_bullet.gd" id="2_2uof7"]
+[ext_resource type="Texture2D" uid="uid://cs1tfx40886qb" path="res://Resources/Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Big Space Gun.png" id="3_0pwmh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bkf0o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fowe"]
+atlas = ExtResource("3_0pwmh")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7taj5"]
+atlas = ExtResource("3_0pwmh")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxrt4"]
+atlas = ExtResource("3_0pwmh")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yrou6"]
+atlas = ExtResource("3_0pwmh")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2j2i"]
+atlas = ExtResource("3_0pwmh")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7baaa"]
+atlas = ExtResource("3_0pwmh")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_58wlj"]
+atlas = ExtResource("3_0pwmh")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pvt5i"]
+atlas = ExtResource("3_0pwmh")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jo26x"]
+atlas = ExtResource("3_0pwmh")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hh2sk"]
+atlas = ExtResource("3_0pwmh")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4x671"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4fowe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7taj5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pxrt4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yrou6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p2j2i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7baaa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_58wlj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvt5i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jo26x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hh2sk")
+}],
+"loop": true,
+"name": &"Move",
+"speed": 20.0
+}]
+
+[node name="BasicCannonBullet" instance=ExtResource("1_ima4s")]
+collision_layer = 16416
+collision_mask = 32
+audio_bus_name = &"SFX"
+script = ExtResource("2_2uof7")
+speed = 20.0
+
+[node name="Hitbox" parent="." index="0"]
+shape = SubResource("CircleShape2D_bkf0o")
+
+[node name="Model" type="AnimatedSprite2D" parent="." index="2"]
+sprite_frames = SubResource("SpriteFrames_4x671")
+animation = &"Move"
+autoplay = "Move"
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

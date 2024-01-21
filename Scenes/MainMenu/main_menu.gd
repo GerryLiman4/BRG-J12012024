@@ -1,6 +1,12 @@
 extends Control
 
+@export var bgm_track : AudioStream
+
+func _ready():
+	AudioManager.play_bgm_stream(bgm_track,true)
+
 func _on_start_button_is_selected(selected_button):
+	AudioManager.stop_bgm_stream()
 	SceneHandler.load_scene(SceneHandler.SCENES.BATTLE_ARENA)
 
 

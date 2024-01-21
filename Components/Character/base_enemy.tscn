@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://m1nmatnje01v"]
+[gd_scene load_steps=10 format=3 uid="uid://m1nmatnje01v"]
 
 [ext_resource type="PackedScene" uid="uid://dftx81t7nvim8" path="res://Components/Character/base_character_controller.tscn" id="1_q84y0"]
 [ext_resource type="Texture2D" uid="uid://b06jpfs1tnfto" path="res://Resources/basic cute robot/clawbot/1/botzred1.png" id="2_qoy6o"]
@@ -10,10 +10,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="8_h6bqg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ik120"]
-size = Vector2(29, 24)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e265p"]
-size = Vector2(29, 24)
+size = Vector2(283, 320)
 
 [node name="BaseEnemy" node_paths=PackedStringArray("state_chart", "animator", "sfx_stream", "attack_delay_timer") instance=ExtResource("1_q84y0")]
 collision_layer = 1024
@@ -210,11 +207,6 @@ event = &"Die"
 [node name="Hitbox" type="Area2D" parent="." index="5"]
 collision_layer = 32
 collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" index="0"]
-position = Vector2(-0.5, 2)
-shape = SubResource("RectangleShape2D_e265p")
-debug_color = Color(0.705882, 0.235294, 0.47451, 0.419608)
 
 [node name="AttackDelay" type="Timer" parent="." index="6"]
 wait_time = 0.75

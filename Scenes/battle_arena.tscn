@@ -1,19 +1,42 @@
-[gd_scene load_steps=6 format=3 uid="uid://ba51b1dwuhitg"]
+[gd_scene load_steps=12 format=3 uid="uid://ba51b1dwuhitg"]
 
 [ext_resource type="Script" path="res://Scenes/battle_arena_manager.gd" id="1_bva3p"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="1_kui7w"]
 [ext_resource type="Texture2D" uid="uid://dwvt17ot5tunt" path="res://Resources/SampleBackground.png" id="2_x42dv"]
 [ext_resource type="PackedScene" uid="uid://7tjty7bena1t" path="res://Components/Character/player.tscn" id="3_vkt46"]
-[ext_resource type="PackedScene" uid="uid://dkoqwk86xiixj" path="res://Components/Character/boss_1.tscn" id="5_l1vkq"]
+[ext_resource type="FontFile" uid="uid://bx43fhccpdyfy" path="res://Theme/roboto/Roboto-Black.ttf" id="4_nnged"]
+[ext_resource type="PackedScene" uid="uid://dkoqwk86xiixj" path="res://Components/Character/battle_cruiser.tscn" id="5_0muj3"]
+[ext_resource type="Script" path="res://Components/camera_shaker.gd" id="5_a1rl2"]
 
-[node name="BattleArena" type="Node2D"]
+[sub_resource type="LabelSettings" id="LabelSettings_vjgsv"]
+line_spacing = 5.0
+font = ExtResource("4_nnged")
+font_size = 28
+outline_size = 22
+outline_color = Color(0, 0, 0, 0.741176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ka276"]
+size = Vector2(1074, 319)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pvn16"]
+size = Vector2(204, 950)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7vbm3"]
+size = Vector2(177, 944)
+
+[node name="BattleArena" type="Node2D" node_paths=PackedStringArray("boss_name_label", "boss_hp")]
 script = ExtResource("1_bva3p")
+boss_name = "BATTLE CRUISER"
+boss_name_label = NodePath("HUD/MarginContainer/VBoxContainer/BossName")
+boss_hp = NodePath("HUD/MarginContainer/VBoxContainer/ProgressBar")
 
 [node name="Background" type="Sprite2D" parent="."]
+visible = false
 scale = Vector2(2, 2)
 texture = ExtResource("2_x42dv")
 
 [node name="PhantomCamera2D" type="Node2D" parent="."]
+visible = false
 script = ExtResource("1_kui7w")
 priority_override = false
 priority = 0
@@ -37,10 +60,61 @@ inactive_update_mode = 0
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("3_vkt46")]
-visible = false
-position = Vector2(1, 178)
+[node name="MarginContainer" type="MarginContainer" parent="HUD"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
 
-[node name="Boss1" parent="." instance=ExtResource("5_l1vkq")]
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer"]
+layout_mode = 2
+
+[node name="BossName" type="Label" parent="HUD/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "BATTLE CRUISER"
+label_settings = SubResource("LabelSettings_vjgsv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="HUD/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+step = 1.0
+value = 100.0
+rounded = true
+show_percentage = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("5_a1rl2")
+
+[node name="Player" parent="." instance=ExtResource("3_vkt46")]
+position = Vector2(0, 343)
+
+[node name="Boundaries" type="StaticBody2D" parent="."]
+collision_layer = 16777216
+collision_mask = 512
+
+[node name="BoundaryTop" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(-18, -624)
+shape = SubResource("RectangleShape2D_ka276")
+
+[node name="BoundaryBot" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(-18, 644)
+shape = SubResource("RectangleShape2D_ka276")
+
+[node name="BoundaryLeft" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(-446, 8)
+shape = SubResource("RectangleShape2D_pvn16")
+
+[node name="BoundaryRight" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(431.5, 13)
+shape = SubResource("RectangleShape2D_7vbm3")
+
+[node name="Boss1" parent="." instance=ExtResource("5_0muj3")]
+position = Vector2(0, -292)

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://vdrk0cbq2u8"]
+
+[ext_resource type="Script" path="res://Scripts/Singleton/AudioManager.gd" id="1_sor65"]
+
+[node name="AudioManager" type="Node" node_paths=PackedStringArray("bgm_stream", "sfx_stream")]
+script = ExtResource("1_sor65")
+bgm_stream = NodePath("BGMStream")
+sfx_stream = NodePath("SFXStream")
+
+[node name="BGMStream" type="AudioStreamPlayer2D" parent="."]
+autoplay = true
+bus = &"BGM"
+
+[node name="SFXStream" type="AudioStreamPlayer2D" parent="."]
+autoplay = true
+bus = &"SFX"
