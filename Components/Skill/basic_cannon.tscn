@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6665ado4mdxr"]
+[gd_scene load_steps=9 format=3 uid="uid://b6665ado4mdxr"]
 
 [ext_resource type="PackedScene" uid="uid://biji3cfgmrngs" path="res://Components/Skill/base_skill.tscn" id="1_tgccx"]
 [ext_resource type="Script" path="res://Components/Skill/basic_cannon.gd" id="2_40878"]
 [ext_resource type="PackedScene" uid="uid://domkhv7jf3u73" path="res://Components/Skill/basic_cannon_bullet.tscn" id="3_jjykm"]
 [ext_resource type="Texture2D" uid="uid://rj63tepjicnu" path="res://Resources/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Big Space Gun.png" id="3_kiry3"]
+[ext_resource type="AudioStream" uid="uid://1kbrdptpsp3j" path="res://Resources/BGM&SFX/ShootSound.ogg" id="4_aadpl"]
 
 [sub_resource type="Animation" id="Animation_n735x"]
 length = 0.001
@@ -57,7 +58,7 @@ _data = {
 "Shoot": SubResource("Animation_xsneh")
 }
 
-[node name="BasicCannon" node_paths=PackedStringArray("animator", "spawn_point") instance=ExtResource("1_tgccx")]
+[node name="BasicCannon" node_paths=PackedStringArray("animator", "spawn_point", "sfx_player") instance=ExtResource("1_tgccx")]
 script = ExtResource("2_40878")
 animator = NodePath("AnimationPlayer")
 bullet_prefab = ExtResource("3_jjykm")
@@ -65,6 +66,8 @@ bullet_speed = 600.0
 bullet_damage = 1
 direction = Vector2(0, 0)
 spawn_point = NodePath("Model/Marker2D")
+sfx_player = NodePath("SfxPlayer")
+shoot_sfx = ExtResource("4_aadpl")
 cooldown_time = 0.2
 
 [node name="Model" type="Sprite2D" parent="." index="0"]
@@ -77,3 +80,6 @@ hframes = 12
 libraries = {
 "": SubResource("AnimationLibrary_y3j55")
 }
+
+[node name="SfxPlayer" type="AudioStreamPlayer2D" parent="." index="3"]
+bus = &"SFX"

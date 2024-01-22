@@ -9,6 +9,10 @@ extends BaseSkill
 @export var direction : Vector2 = Vector2.ZERO
 @export var spawn_point : Marker2D
 
+@export_category("SFX")
+@export var sfx_player : AudioStreamPlayer2D
+@export var shoot_sfx : AudioStream
+
 const ANIMATION_ID = {
 	"SHOOT" : "Shoot",
 }
@@ -40,3 +44,9 @@ func shoot():
 	instantiated_bullet.initialize(faction_id,launch_direction,is_boss_possesion)
 	instantiated_bullet.global_position = spawn_point.global_position
 	get_tree().root.call_deferred("add_child",instantiated_bullet)
+	
+	play_sfx()
+
+func play_sfx():
+	sfx_player.stream = shoot_sfx
+	sfx_player.play()

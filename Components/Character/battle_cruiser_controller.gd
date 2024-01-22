@@ -13,6 +13,12 @@ extends BaseEnemy
 @export var health : BaseHealth
 @export var max_hp : int = 15
 
+@export_category("SFX")
+@export var death_explosion_sound : AudioStream
+
+@export_category("VFX")
+@export var explosion_vfx : CPUParticles2D
+
 @export var test_timer : Timer
 # for testing
 func _ready():
@@ -143,8 +149,21 @@ func on_damaged():
 	SignalManager.on_boss_hp_updated.emit(health.max_health,health.current_health)
 
 func on_died():
+	sfx_stream.stream = death_explosion_sound
+	sfx_stream.play()
+	
 	SignalManager.on_boss_hp_updated.emit(health.max_health,health.current_health)
+	
+	if condition_animator.has_animation("Die") :
+		condition_animator.play("Die")
+		explosion_vfx.emitting = true
+		await condition_animator.animation_finished
+		explosion_vfx.emitting = false
+	
 	queue_free()
+
+func set_explosion_amount(amount : int):
+	explosion_vfx.amount = amount
 
 func _on_move_timer_timeout():
 	call_deferred("switch_state", STATE_EVENT.RANDOM_MOVEMENT)
